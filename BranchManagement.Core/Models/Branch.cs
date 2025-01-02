@@ -30,6 +30,9 @@ namespace BranchManagement.Core.Models
         [StringLength(250, ErrorMessage = "Manager name cannot exceed 250 characters.")]
         public string ManagerName { get; set; }
 
-        
+        //prop
+        //public ICollection<Booking> Bookings { get; set; }
+
+
     }
 }   

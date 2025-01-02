@@ -5,15 +5,16 @@ import { AddEditBranchComponent } from './modules/branch/components/add-edit-bra
 import { BranchListComponent } from './modules/branch/components/branch-list/branch-list.component';
 import { BookingComponent } from './modules/booking/booking/booking.component';
 import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
- // { path: '', component: BookingComponent }, 
-  { path: '', component: BranchListComponent }, 
+  
+  { path: '', component: BookingComponent },
+  { path: 'booking', component: BookingComponent },
   { path: 'login', component: LoginComponent },
-
-  { path: 'branches', component: BranchListComponent },
-  { path: 'add-branch', component: AddEditBranchComponent  },
-  { path: 'edit-branch/:id', component: AddEditBranchComponent },
+  { path: 'branches', component: BranchListComponent, canActivate: [AuthGuard] },
+  { path: 'add-branch', component: AddEditBranchComponent, canActivate: [AuthGuard] },
+  { path: 'edit-branch/:id', component: AddEditBranchComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' } 
 ];
 

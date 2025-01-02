@@ -10,5 +10,7 @@ namespace BranchManagement.Infrastructure.Data
     {
         public BranchDbContext(DbContextOptions<BranchDbContext> options) : base(options) { }
         public DbSet<Branch> Branches { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
+        
     }
 }

@@ -39,7 +39,7 @@
         <td>{{ branch.closingHour }}</td>
         <td>{{ branch.managerName }}</td>
         <td>
-         
+
           <button class="btn btn-primary btn-sm"
                   (click)="editBranch(branch)">
             Edit
@@ -58,21 +58,27 @@
   <nav *ngIf="totalPages > 1">
     <ul class="pagination justify-content-center">
       <li class="page-item"
-          [class.disabled]="currentPage === 1"
-          (click)="changePage(currentPage - 1)">
-        <a class="page-link">Previous</a>
+          [class.disabled]="currentPage === 1">
+        <a class="page-link"
+           (click)="currentPage > 1 && changePage(currentPage - 1)">
+          Previous
+        </a>
       </li>
       <li class="page-item"
           *ngFor="let page of [].constructor(totalPages); let i = index"
-          [class.active]="currentPage === i + 1"
-          (click)="changePage(i + 1)">
-        <a class="page-link">{{ i + 1 }}</a>
+          [class.active]="currentPage === i + 1">
+        <a class="page-link"
+           (click)="changePage(i + 1)">
+          {{ i + 1 }}
+        </a>
       </li>
       <li class="page-item"
-          [class.disabled]="currentPage === totalPages"
-          (click)="changePage(currentPage + 1)">
-        <a class="page-link">Next</a>
+          [class.disabled]="currentPage === totalPages">
+        <a class="page-link"
+           (click)="currentPage < totalPages && changePage(currentPage + 1)">
+          Next
+        </a>
       </li>
     </ul>
   </nav>
-</div>
+

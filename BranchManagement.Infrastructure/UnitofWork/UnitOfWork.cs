@@ -11,6 +11,7 @@ namespace BranchManagement.Infrastructure.UnitOfWork
     {
         private readonly BranchDbContext _context;
         private IBranchRepository _branchRepository;
+        private IBookingRepository _bookingRepository;
 
         public UnitOfWork(BranchDbContext context)
         {
@@ -22,6 +23,13 @@ namespace BranchManagement.Infrastructure.UnitOfWork
             get
             {
                 return _branchRepository ??= new BranchRepository(_context);  
+            }
+        }
+        public IBookingRepository BookingRepository
+        {
+            get
+            {
+                return _bookingRepository ??= new BookingRepository(_context);
             }
         }
 

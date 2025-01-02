@@ -1,3 +1,4 @@
+using System.Data;
 using System.Text;
 using BranchManagement.Core.Interfaces;
 using BranchManagement.Infrastructure.Data;
@@ -17,6 +18,8 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IBranchService, BranchService>();
 builder.Services.AddScoped<IBranchRepository, BranchRepository>();
+builder.Services.AddScoped<IBookingService, BookingService>();
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 
 builder.Services.AddCors(options =>
 {
@@ -55,9 +58,10 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
 });
-
 var app = builder.Build();
 
+// Seed data
+await DataSeeder.SeedAdminUserAsync(app.Services);
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
