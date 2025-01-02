@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Branch List</h2>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <button class="btn btn-success btn-sm" (click)="navigateToAddBranch()">Add Branch</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <input type="text"
+           [(ngModel)]="searchQuery"
+           (input)="searchBranches()"
+           class="form-control"
+           placeholder="Search by branch title..." />
+  </div>
+
+  <div *ngIf="branches.length === 0">
+    <p class="text-center">No branches available.</p>
+  </div>
+
+  <table class="table table-bordered" *ngIf="branches.length > 0">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Title</th>
+        <th>Opening Hour</th>
+        <th>Closing Hour</th>
+        <th>Manager Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let branch of branches; let i = index">
+        <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
+        <td>{{ branch.title }}</td>
+        <td>{{ branch.openingHour }}</td>
+        <td>{{ branch.closingHour }}</td>
+        <td>{{ branch.managerName }}</td>
+        <td>
+         
+          <button class="btn btn-primary btn-sm"
+                  (click)="editBranch(branch)">
+            Edit
+          </button>
+
+          <button class="btn btn-danger btn-sm"
+                  (click)="deleteBranch(branch.id)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <nav *ngIf="totalPages > 1">
+    <ul class="pagination justify-content-center">
+      <li class="page-item"
+          [class.disabled]="currentPage === 1"
+          (click)="changePage(currentPage - 1)">
+        <a class="page-link">Previous</a>
+      </li>
+      <li class="page-item"
+          *ngFor="let page of [].constructor(totalPages); let i = index"
+          [class.active]="currentPage === i + 1"
+          (click)="changePage(i + 1)">
+        <a class="page-link">{{ i + 1 }}</a>
+      </li>
+      <li class="page-item"
+          [class.disabled]="currentPage === totalPages"
+          (click)="changePage(currentPage + 1)">
+        <a class="page-link">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>
