@@ -1,5 +1,7 @@
-﻿using BranchManagement.Core.Interfaces;
+﻿using BranchManagement.API.Helpers;
+using BranchManagement.Core.Interfaces;
 using BranchManagement.Core.Models;
+using BranchManagement.Core.ViewModels;
 using BranchManagement.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,12 +32,12 @@ namespace BranchManagement.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> BookBranch([FromBody] Booking booking)
+        public async Task<IActionResult> BookBranch([FromBody] BookingViewModel booking)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            await _BookingService.AddBookingAsync(booking);
+            await _BookingService.AddBookingAsync(Mapper.Map<BookingViewModel, Booking>(booking));
 
             return Ok(new { message = "We will contact you soon after checking availability." });
         }

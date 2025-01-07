@@ -1,41 +1,3 @@
-<!--<form (ngSubmit)="onSubmit()" [formGroup]="branchForm" class="container mt-4">
-  <div class="form-group">
-    <label for="title">Title</label>
-    <input id="title" formControlName="title" class="form-control" />
-    <div *ngIf="branchForm.get('title')?.invalid && branchForm.get('title')?.touched" class="text-danger">
-      Title is required and cannot exceed 200 characters.
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="openingHour">Opening Hour</label>
-    <input id="openingHour" formControlName="openingHour" type="time" class="form-control" />
-    <div *ngIf="branchForm.get('openingHour')?.invalid && branchForm.get('openingHour')?.touched" class="text-danger">
-      Opening hour is required.
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="closingHour">Closing Hour</label>
-    <input id="closingHour" formControlName="closingHour" type="time" class="form-control" />
-    <div *ngIf="branchForm.get('closingHour')?.invalid && branchForm.get('closingHour')?.touched" class="text-danger">
-      Closing hour is required.
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="managerName">Manager Name</label>
-    <input id="managerName" formControlName="managerName" class="form-control" />
-    <div *ngIf="branchForm.get('managerName')?.invalid && branchForm.get('managerName')?.touched" class="text-danger">
-      Manager name is required and cannot exceed 250 characters.
-    </div>
-  </div>
-
-  <button type="submit" [disabled]="branchForm.invalid" class="btn btn-primary mt-3">
-    {{ isEditMode ? 'Update' : 'Add' }} Branch
-  </button>
-</form>-->
-
 <form (ngSubmit)="onSubmit()" [formGroup]="branchForm" class="container mt-4">
   <div class="form-group">
     <label for="title">Title</label>
@@ -48,7 +10,7 @@
   <div class="form-group">
     <label for="openingHour">Opening Hour</label>
     <input id="openingHour" formControlName="openingHour" type="time" class="form-control" />
-    <div *ngIf="branchForm.get('openingHour')?.invalid && branchForm.get('openingHour')?.touched" class="text-danger">
+    <div *ngIf="branchForm.get('openingHour')?.invalid && branchForm.get('openingHour')?.touched && !branchForm.get('openingHour')?.errors?.['serverError']" class="text-danger">
       Opening hour is required.
     </div>
     <div *ngIf="branchForm.get('openingHour')?.errors?.['serverError']" class="text-danger">
@@ -59,10 +21,9 @@
   <div class="form-group">
     <label for="closingHour">Closing Hour</label>
     <input id="closingHour" formControlName="closingHour" type="time" class="form-control" />
-    <div *ngIf="branchForm.get('closingHour')?.invalid && branchForm.get('closingHour')?.touched" class="text-danger">
+    <div *ngIf="branchForm.get('closingHour')?.invalid && branchForm.get('closingHour')?.touched && !branchForm.get('closingHour')?.errors?.['serverError']" class="text-danger">
       Closing hour is required.
     </div>
-    <!-- Display server validation error if any -->
     <div *ngIf="branchForm.get('closingHour')?.errors?.['serverError']" class="text-danger">
       {{ branchForm.get('closingHour')?.errors?.['serverError'] }}
     </div>

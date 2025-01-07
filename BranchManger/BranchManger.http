@@ -1,6 +1,0 @@
-@BranchManger_HostAddress = http://localhost:5079
-
-GET {{BranchManger_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

@@ -12,7 +12,6 @@ namespace BranchManagement.Infrastructure.Repositories
         private readonly BranchDbContext _context;
         private readonly DbSet<Branch> _dbSet;
 
-        // Constructor to inject the DbContext
         public BranchRepository(BranchDbContext context)
         {
             _context = context;

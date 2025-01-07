@@ -12,7 +12,6 @@ namespace BranchManagement.Infrastructure.Repositories
         private readonly BranchDbContext _context;
         private readonly DbSet<Booking> _dbSet;
 
-        // Constructor to inject the DbContext
         public BookingRepository(BranchDbContext context)
         {
             _context = context;

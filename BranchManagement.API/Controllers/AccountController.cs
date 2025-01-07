@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using BranchManagement.Core.Models;
+using BranchManagement.Core.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-
 
 
 [Route("api/[controller]")]
@@ -23,7 +24,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginModel model)
+    public async Task<IActionResult> Login([FromBody] Login model)
     {
         var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
         if (result.Succeeded)
@@ -48,7 +49,7 @@ public class AccountController : ControllerBase
 
         var token = new JwtSecurityToken(
             issuer: _configuration["Jwt:Issuer"],
-            audience: _configuration["Jwt:Issuer"],
+            audience: _configuration["Jwt:Audience"],
             claims: claims,
             expires: DateTime.Now.AddMinutes(30),
             signingCredentials: creds);
@@ -56,64 +57,3 @@ public class AccountController : ControllerBase
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }
-
-public class LoginModel
-{
-    public string Username { get; set; }
-    public string Password { get; set; }
-}
-
-//[Route("api/[controller]")]
-//[ApiController]
-//public class AccountController : ControllerBase
-//{
-//    private readonly UserManager<IdentityUser> _userManager;
-//    private readonly SignInManager<IdentityUser> _signInManager;
-//    private readonly IConfiguration _configuration;
-
-//    public AccountController(UserManager<IdentityUser> userManager,
-//                             SignInManager<IdentityUser> signInManager,
-//                             IConfiguration configuration)
-//    {
-//        _userManager = userManager;
-//        _signInManager = signInManager;
-//        _configuration = configuration;
-//    }
-
-//    [HttpPost("Login")]
-//    public async Task<IActionResult> Login([FromBody] LoginModel model)
-//    {
-//        var user = await _userManager.FindByNameAsync(model.Username);
-//        if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
-//        {
-//            var authClaims = new[]
-//            {
-//                new Claim(ClaimTypes.Name, user.UserName),
-//                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-//            };
-
-//            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-
-//            var token = new JwtSecurityToken(
-//                issuer: _configuration["Jwt:Issuer"],
-//                audience: _configuration["Jwt:Audience"],
-//                expires: DateTime.Now.AddHours(3),
-//                claims: authClaims,
-//                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
-//            );
-
-//            return Ok(new
-//            {
-//                token = new JwtSecurityTokenHandler().WriteToken(token),
-//                expiration = token.ValidTo
-//            });
-//        }
-//        return Unauthorized();
-//    }
-//}
-
-//public class LoginModel
-//{
-//    public string Username { get; set; }
-//    public string Password { get; set; }
-//}

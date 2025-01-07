@@ -4,11 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BranchManagement.Core.Models;
 
-namespace BranchManagement.Core.Models
+namespace BranchManagement.Core.ViewModels
 {
-    public class Booking
+    public class BookingViewModel
     {
         public int Id { get; set; }
 
@@ -27,7 +26,5 @@ namespace BranchManagement.Core.Models
         public DateTime BookingDate { get; set; } = DateTime.Now;
         public int BranchId { get; set; }
 
-        //prop
-       public Branch Branch { get; set; }
     }
 }

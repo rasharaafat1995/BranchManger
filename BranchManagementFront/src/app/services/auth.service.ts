@@ -17,7 +17,7 @@ export class AuthService {
     return this.http.post<any>(`${this.apiUrl}/login`, { username, password }).pipe(
       tap(response => {
         localStorage.setItem('token', response.token);
-        localStorage.setItem('username', response.userName); // Store username if available
+        localStorage.setItem('username', response.userName);
       })
     );
   }
@@ -36,7 +36,6 @@ export class AuthService {
     const token = localStorage.getItem('token');
     if (!token) {
       return "";
-      //throw new Error('No token found');
     }
     return token;
   }

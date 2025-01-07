@@ -12,13 +12,8 @@ export class BranchService {
 
   constructor(private http: HttpClient) { }
 
-  //getBranches(): Observable<Branch[]> {
-  //  return this.http.get<Branch[]>(this.apiUrl);
-  //}
-  
 
   getBranches(filter: string, page: number, pageSize: number) {
-    console.log(filter)
     var params;
     if (filter) {
        params = {

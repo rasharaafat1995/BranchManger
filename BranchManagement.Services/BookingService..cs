@@ -1,5 +1,6 @@
 ﻿using BranchManagement.Core.Interfaces;
 using BranchManagement.Core.Models;
+using BranchManagement.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

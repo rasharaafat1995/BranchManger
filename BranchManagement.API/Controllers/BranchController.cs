@@ -1,7 +1,9 @@
 ﻿using BranchManagement.API.Helpers;
 using BranchManagement.Core.Interfaces;
 using BranchManagement.Core.Models;
+using BranchManagement.Core.ViewModels;
 using BranchManagement.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,6 +12,7 @@ namespace BranchManagement.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BranchController : ControllerBase
     {
         private readonly IBranchService _branchService;
@@ -20,13 +23,13 @@ namespace BranchManagement.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddBranch([FromBody] Branch branch)
+        public async Task<IActionResult> AddBranch([FromBody] BranchviewModel branch)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
-            await _branchService.AddBranchAsync(branch);
-            return CreatedAtAction(nameof(GetBranchById), new { id = branch.Id }, branch);
+            Branch NewBranch = Mapper.Map<BranchviewModel, Branch>(branch);
+            await _branchService.AddBranchAsync(NewBranch);
+            return CreatedAtAction(nameof(GetBranchById), new { id = NewBranch.Id }, NewBranch);
         }
 
         [HttpGet]
@@ -47,8 +50,7 @@ namespace BranchManagement.API.Controllers
         public async Task<IActionResult> GetAllBranches()
         {
             var branches = await _branchService.GetAllBranchesAsync();
-            return new { Branches = branches }.SerializeObject();
-            //return Ok(new { Branches = branches });
+            return Ok(new { Branches = branches });
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBranchById(int id)
@@ -65,7 +67,7 @@ namespace BranchManagement.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBranch(int id, [FromBody] Branch branch)
+        public async Task<IActionResult> UpdateBranch(int id, [FromBody] BranchviewModel branch)
         {
             if (id != branch.Id)
                 return BadRequest("Branch ID mismatch.");
@@ -75,7 +77,8 @@ namespace BranchManagement.API.Controllers
 
             try
             {
-                await _branchService.UpdateBranchAsync(branch);
+                
+                await _branchService.UpdateBranchAsync(Mapper.Map<BranchviewModel, Branch>(branch));
                 return NoContent();
             }
             catch (KeyNotFoundException ex)

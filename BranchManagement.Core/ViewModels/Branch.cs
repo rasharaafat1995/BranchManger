@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using BranchManagement.Core.Helpers;
 
-namespace BranchManagement.Core.Models
+namespace BranchManagement.Core.ViewModels
 {
-    public class Branch
+    public class BranchviewModel
     {
         public int Id { get; set; }
 
@@ -30,9 +30,6 @@ namespace BranchManagement.Core.Models
         [StringLength(250, ErrorMessage = "Manager name cannot exceed 250 characters.")]
         public string ManagerName { get; set; }
 
-        //prop
-        public ICollection<Booking> Bookings { get; set; }
-
 
     }
-}   
+}
